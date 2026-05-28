@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block language %} lang= "fa-ir" dir="rtl"{% endblock %}
+{% block title %}SignUp{% endblock %}
+{% block base %}
+    
+
+<div class="register-container" style="direction: rtl; text-align: right" dir="rtl">
+        <div class="register-header" dir="rtl">
+            <h1>📝 عضویت در سامانه</h1>
+            <p>لطفا اطلاعات خود را وارد کنید</p>
+        </div>
+
+        <div class="register-form">
+            <!-- نمایش پیام‌های خطا یا موفقیت -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}error{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- فرم ثبت‌نام -->
+            <form method="post" novalidate>
+                {% csrf_token %}
+                
+                <!-- فیلد نام کاربری (ایمیل یا شماره موبایل) -->
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">📱 نام کاربری (ایمیل یا شماره موبایل)</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <span class="error-message">{{ form.username.errors.0 }}</span>
+                    {% endif %}
+                    <span class="help-text">مثال: user@gmail.com یا 09123456789</span>
+                </div>
+
+                <!-- فیلد نام -->
+                <div class="form-group">
+                    <label for="{{ form.first_name.id_for_label }}">👤 نام</label>
+                    {{ form.first_name }}
+                    {% if form.first_name.errors %}
+                        <span class="error-message">{{ form.first_name.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- فیلد نام خانوادگی -->
+                <div class="form-group">
+                    <label for="{{ form.last_name.id_for_label }}">👨‍👩‍👧 نام خانوادگی</label>
+                    {{ form.last_name }}
+                    {% if form.last_name.errors %}
+                        <span class="error-message">{{ form.last_name.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <!-- فیلد رمز عبور -->
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">🔒 رمز عبور</label>
+                    <div class="field-icon">
+                        {{ form.password1 }}
+                        <span class="toggle-password" onclick="togglePassword('id_password1')">👁️</span>
+                    </div>
+                    {% if form.password1.errors %}
+                        <span class="error-message">{{ form.password1.errors.0 }}</span>
+                    {% endif %}
+                    <span class="help-text">حداقل ۸ کاراکتر</span>
+                </div>
+
+                <!-- فیلد تکرار رمز عبور -->
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">🔒 تکرار رمز عبور</label>
+                    <div class="field-icon">
+                        {{ form.password2 }}
+                        <span class="toggle-password" onclick="togglePassword('id_password2')">👁️</span>
+                    </div>
+                    {% if form.password2.errors %}
+                        <span class="error-message">{{ form.password2.errors.0 }}</span>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn-register">✨ ثبت‌نام و ورود</button>
+            </form>
+
+            <div class="login-link">
+                قبلاً عضویت دارید؟ <a href="{% url 'account:login' %}">وارد شوید</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+    
+<script>
+        // نمایش/مخفی کردن رمز عبور
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const type = field.getAttribute('type') === 'password' ? 'text' : 'password';
+            field.setAttribute('type', type);
+        }
+
+        // اعتبارسنجی سمت کاربر (اختیاری)
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const username = document.getElementById('id_username').value;
+            const password1 = document.getElementById('id_password1').value;
+            const password2 = document.getElementById('id_password2').value;
+            
+            // بررسی نام کاربری
+            const isEmail = /^[^\s@]+@([^\s@.,]+\.)+[^\s@.,]{2,}$/.test(username);
+            const isPhone = /^09[0-9]{9}$/.test(username);
+            
+            if (!isEmail && !isPhone) {
+                e.preventDefault();
+                alert('نام کاربری باید ایمیل معتبر یا شماره موبایل 11 رقمی باشد');
+                return false;
+            }
+            
+            // بررسی رمز عبور
+            if (password1.length < 8) {
+                e.preventDefault();
+                alert('رمز عبور باید حداقل 8 کاراکتر باشد');
+                return false;
+            }
+            
+            if (password1 !== password2) {
+                e.preventDefault();
+                alert('رمز عبور و تکرار آن مطابقت ندارند');
+                return false;
+            }
+        });
+    </script>    
+
+{% endblock %}

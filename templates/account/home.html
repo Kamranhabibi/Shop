@@ -1,0 +1,134 @@
+<!-- templates/home.html -->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>داشبورد | سامانه کاربران</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-name {
+            color: #333;
+            font-weight: 600;
+        }
+
+        .logout-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #d32f2f;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .welcome-card h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .welcome-card p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        .user-details {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .user-details p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .user-details strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">سامانه کاربران</div>
+        <div class="user-info">
+            <span class="user-name">خوش آمدی {{ user.first_name|default:user.username }}!</span>
+            <a href="{% url 'logout' %}" class="logout-btn">خروج</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome-card">
+            <h1>🎉 به سامانه خوش آمدید</h1>
+            <p>شما با موفقیت وارد حساب کاربری خود شدید</p>
+            
+            <div class="user-details">
+                <p><strong>نام کاربری:</strong> {{ user.username }}</p>
+                {% if user.email %}
+                <p><strong>ایمیل:</strong> {{ user.email }}</p>
+                {% endif %}
+                {% if user.phone %}
+                <p><strong>شماره موبایل:</strong> {{ user.phone }}</p>
+                {% endif %}
+                <p><strong>نام:</strong> {{ user.first_name|default:"-" }}</p>
+                <p><strong>نام خانوادگی:</strong> {{ user.last_name|default:"-" }}</p>
+                <p><strong>تاریخ عضویت:</strong> {{ user.date_join|date:"Y/m/d" }}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
