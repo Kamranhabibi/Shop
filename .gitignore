@@ -1,0 +1,74 @@
+# Django
+*.log
+*.pot
+*.pyc
+*.pyo
+__pycache__/
+*.mo
+*.db
+*.sqlite3
+*.sqlite3-journal
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+.coverage
+.coverage.*
+htmlcov/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Virtual environment
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+pythonenv*
+
+# Python
+*.py[cod]
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.egg-info/
+*.whl
+.Python
+.pytest_cache/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.project
+.pydevproject
+.settings/
+
+# Django migrations (optional - uncomment if you prefer)
+# */migrations/*.py
+# !*/migrations/__init__.py
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# Logs
+logs/
+*.log
+
+# Secret key
+secret.key
+django_key.txt
